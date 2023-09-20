@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -115,16 +116,41 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        """ distinguishing the class part from the parameter part """
+        pattern = """(^\w+)((?:\s+\w+=[^\s]+)+)?"""  # noqa : regex pattern
+        match_up = re.match(pattern, args)
+        arg = [part for part in match_up.groups() if part] if match_up else []
+        if not arg:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        cls_part = arg[0]
+        if cls_part not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        param_dic = {}
+        if arg[1]:
+            # distinguishing every key and value of all parameters
+            paras = arg[1].split(" ")
+            paras = [p for p in paras if p]
+            for p in paras:
+                [key, val] = p.split("=")
+                if val[0] == '"' and val[-1] == '"':
+                    val = val[1:-1].replace('_', ' ')
+                else:
+                    try:
+                        val = int(val)
+                    except ValueError:
+                        try:
+                            val = float(val)
+                        except ValueError:
+                            continue
+                param_dic[key] = val
+
+        new_instance = HBNBCommand.classes[cls_part]()
+        for key, val in param_dic.items():
+            setattr(new_instance, key, val)
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -206,11 +232,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
@@ -319,6 +345,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

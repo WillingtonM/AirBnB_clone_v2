@@ -22,7 +22,7 @@ class Review(BaseModel, Base):
             place_id (String): Review's place id.
             user_id (String): Review's user id.
     """
-    __tablename__ = "cities"
-    name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
-    places = relationship("Place", backref="cities", cascade="delete")
+    __tablename__ = "reviews"
+    place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    text = Column(String(1024), nullable=False)

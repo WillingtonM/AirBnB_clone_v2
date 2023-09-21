@@ -19,7 +19,6 @@ association_table = Table("place_amenity", Base.metadata,
                                  ForeignKey("amenities.id"),
                                  primary_key=True, nullable=False))
 
-
 class Place(BaseModel, Base):
     """
         Place class class
@@ -27,20 +26,20 @@ class Place(BaseModel, Base):
         Inherits from SQLAlchemy Base.
 
         Attributes:
-            __tablename__ (str): The name of table to store places.
+            __tablename__ (str): Name of table to store places.
             city_id (String): The city id.
             user_id (String): The place's user id.
-            name (String): The name of the place.
-            description (String): Description of the place.
+            name (String): Name of place.
+            description (String): Description of place.
             number_rooms (Integer): Number of rooms of a place.
-            number_bathrooms (Integer): Number of bathrooms in the place.
-            max_guest (Integer): Maximum number of guests of the place.
+            number_bathrooms (Integer): Number of bathrooms in place.
+            max_guest (Integer): Maximum number of guests of place.
             price_by_night (Integer): Price per night.
-            latitude (Float): Latitude of the place .
-            longitude (Float): Longitude of the place.
+            latitude (Float): Latitude of place .
+            longitude (Float): Longitude of place.
             reviews (relationship): Place-Review relationship.
             amenities (relationship): Place-Amenity relationship.
-            amenity_ids (list): id list of all linked amenities.
+            amenity_ids (list): id list of linked amenities.
     """
     __tablename__ = "places"
     city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)

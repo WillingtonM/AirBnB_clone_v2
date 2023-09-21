@@ -3,10 +3,16 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, Integer, DateTime
 import models
+from os import environ
 
-Base = declarative_base()
+storage_engine = environ.get("HBNB_TYPE_STORAGE")
+
+if (storage_engine == "db"):
+    Base = declarative_base()
+else:
+    Base = object
 
 
 class BaseModel:

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-
-""" State Module for HBNB project """
+""" Amenity Class for HBNB project """
+import os
 from models.base_model import Base, BaseModel
 from sqlalchemy import String, Column
 from sqlalchemy.orm import relationship
@@ -18,6 +18,5 @@ class Amenity(BaseModel, Base):
             place_amenities (relationship): Place-Amenity relationship.
     """
     __tablename__ = "amenities"
-    name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary="place_amenity", 
-                                   viewonly=False)
+    name = Column(String(128), nullable=False) if os.getenv('HBNB_TYPE_STORAGE') == 'db' else ''
+    place_amenities = relationship("Place", secondary="place_amenity")

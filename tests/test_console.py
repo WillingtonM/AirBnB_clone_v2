@@ -146,18 +146,18 @@ class TestHBNBCommand(unittest.TestCase):
     def test_func_create_kwargs(self):
         """create command with kwargs."""
         with patch("sys.stdout", new=StringIO()) as fl:
-            call = ('create Place city_id="0001" name="My_house" '
+            called = ('create Place city_id="0001" name="My_house" '
                     'number_rooms=4 latitude=37.77 longitude=a')
-            self.HBNB.onecmd(call)
+            self.HBNB.onecmd(called)
             pl = fl.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as fl:
             self.HBNB.onecmd("all Place")
             output = fl.getvalue()
             self.assertIn(pl, output)
-            self.assertIn("'city_id': '0001'", output)
-            self.assertIn("'name': 'My house'", output)
-            self.assertIn("'number_rooms': 4", output)
-            self.assertIn("'latitude': 37.77", output)
+            self.assertIn("'city_id': '001'", output)
+            self.assertIn("'name': 'My houe'", output)
+            self.assertIn("'number_rooms': 5", output)
+            self.assertIn("'latitude': 37.57", output)
             self.assertNotIn("'longitude'", output)
 
     def test_func_show(self):

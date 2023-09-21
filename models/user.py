@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """ holds class User"""
-import models
-from models.base_model import BaseModel, Base
-from os import getenv
-from sqlalchemy import Column, String
-import sqlalchemy
+from models.base_model import Base
+from models.base_model import BaseModel
+from sqlalchemy import String
+from sqlalchemy import Column
 from sqlalchemy.orm import relationship
 
 

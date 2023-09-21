@@ -48,10 +48,10 @@ class TestHBNBCommand(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
 
     def test_func_pep8(self):
-        """Pep8 styling."""
         style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(["console.py"])
-        self.assertEqual(p.total_errors, 0, "fix Pep8")
+        """Pep8 styling."""
+        py = style.check_files(["console.py"])
+        self.assertEqual(py.total_errors, 0, "fix Pep8")
 
     def test_func_docstrings(self):
         """Check for docstrings"""
@@ -70,7 +70,7 @@ class TestHBNBCommand(unittest.TestCase):
 
     def test_func_emptyline(self):
         """any empty line input"""
-        with patch("sys.stdout", new=StringIO()) as fll:
+        with patch("sys.stdout", new=StringIO()) as fl:
             self.HBNB.onecmd("\n")
             self.assertEqual("", fl.getvalue())
 
@@ -216,7 +216,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** class name missing **\n", fl.getvalue())
         with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("update sldkfjsl")
+            self.HBNB.onecmd("update ldkfjslsa")
             self.assertEqual(
                 "** class doesn't exist **\n", fl.getvalue())
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -288,7 +288,7 @@ class TestHBNBCommand(unittest.TestCase):
     def test_func_update(self):
         """alternate destroy command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
-            self.HBNB.onecmd("sldkfjsl.update()")
+            self.HBNB.onecmd("ldkfjslsa.update()")
             self.assertEqual(
                 "** class doesn't exist **\n", fl.getvalue())
         with patch('sys.stdout', new=StringIO()) as fl:

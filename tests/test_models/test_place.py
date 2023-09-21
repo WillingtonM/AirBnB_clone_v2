@@ -16,65 +16,65 @@ class test_Place(test_basemodel):
 
     def test_func_city_id(self):
         """Tests the type of city_id"""
-        new = self.value()
-        self.assertEqual(type(new.city_id), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.city_id), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_user_id(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.user_id), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_name(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.name), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.name), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_description(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.description), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.description), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_number_rooms(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.number_rooms), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.number_rooms), 
                          int if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_number_bathrooms(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.number_bathrooms), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.number_bathrooms), 
                          int if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_max_guest(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.max_guest), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.max_guest), 
                          int if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_price_by_night(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.price_by_night), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.price_by_night), 
                          int if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_latitude(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.latitude), 
                          float if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_longitude(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.latitude), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.latitude), 
                          float if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None))
 
     def test_func_amenity_ids(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.amenity_ids), list)
+        new_val = self.value()
+        self.assertEqual(type(new_val.amenity_ids), list)

@@ -36,7 +36,7 @@ class test_basemodel(unittest.TestCase):
         """Tests kwargs"""
         val = self.value()
         copy = val.to_dict()
-        new = BaseModel(**copy)
+        new_val = BaseModel(**copy)
         self.assertFalse(new is val)
 
     def test_func_kwargs_int(self):
@@ -45,7 +45,7 @@ class test_basemodel(unittest.TestCase):
         copy = val.to_dict()
         copy.update({1: 2})
         with self.assertRaises(TypeError):
-            new = BaseModel(**copy)
+            new_val = BaseModel(**copy)
 
     def test_func_save(self):
         """ Testing save """
@@ -130,31 +130,31 @@ class test_basemodel(unittest.TestCase):
         """Tests kwargs that is empty indeed"""
         nd = {None: None}
         with self.assertRaises(TypeError):
-            new = self.value(**nd)
+            new_val = self.value(**nd)
 
     def test_func_kwargs_one(self):
         """Tests kwargs with only one key-value pair"""
         nd = {'Name': 'test'}
         with self.assertRaises(KeyError):
-            new = self.value(**nd)
+            new_val = self.value(**nd)
 
     def test_func_id(self):
         """Tests type of id"""
-        new = self.value()
-        self.assertEqual(type(new.id), str)
+        new_val = self.value()
+        self.assertEqual(type(new_val.id), str)
 
     def test_func_created_at(self):
         """Tests type of created_at"""
-        new = self.value()
-        self.assertEqual(type(new.created_at), datetime.datetime)
+        new_val = self.value()
+        self.assertEqual(type(new_val.created_at), datetime.datetime)
 
     def test_func_updated_at(self):
         """Tests type of updated_at"""
-        new = self.value()
-        self.assertEqual(type(new.updated_at), datetime.datetime)
-        n = new.to_dict()
-        new = BaseModel(**n)
-        self.assertFalse(new.created_at == new.updated_at)
+        new_val = self.value()
+        self.assertEqual(type(new_val.updated_at), datetime.datetime)
+        n = new_val.to_dict()
+        new_val = BaseModel(**n)
+        self.assertFalse(new_val.created_at == new_val.updated_at)
 
     @unittest.skipIf(
         os.getenv('HBNB_TYPE_STORAGE') == 'db', 'FileStorage test')

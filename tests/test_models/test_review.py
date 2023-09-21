@@ -16,21 +16,21 @@ class test_review(test_basemodel):
 
     def test_func_place_id(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.place_id), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.place_id), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
                          )
 
     def test_func_user_id(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.user_id), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
                          )
 
     def test_func_text(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.text), 
+        new_val = self.value()
+        self.assertEqual(type(new_val.text), 
                          str if os.getenv('HBNB_TYPE_STORAGE') != 'db' else type(None)
                          )

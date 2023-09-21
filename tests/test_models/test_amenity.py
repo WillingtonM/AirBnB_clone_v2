@@ -6,10 +6,10 @@ from models.amenity import Amenity
 
 
 class test_Amenity(test_basemodel):
-    """ """
+    """Represents tests for Amenity model"""
 
     def __init__(self, *args, **kwargs):
-        """Represents tests for Amenity model"""
+        """Initialises test class"""
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity

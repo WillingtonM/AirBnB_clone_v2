@@ -7,6 +7,7 @@ from models.base_model import BaseModel, Base
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Review(BaseModel, Base):
@@ -21,16 +22,7 @@ class Review(BaseModel, Base):
             place_id (String): Review's place id.
             user_id (String): Review's user id.
     """
-    if models.storage_t == "db":
-        __tablename__ = "reviews"
-        place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
-        user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-        text = Column(String(1024), nullable=False)
-    else:
-        place_id = ""
-        user_id = ""
-        text = ""
-
-    def __init__(self, *args, **kwargs):
-        """initialises the Review class"""
-        super().__init__(*args, **kwargs)
+    __tablename__ = "cities"
+    name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
+    places = relationship("Place", backref="cities", cascade="delete")

@@ -16,7 +16,8 @@ class TestHBNBCommand(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """HBNBCommand testing setup.
+        """
+            HBNBCommand testing setup.
         """
         try:
             os.rename("file.json", "tmp")
@@ -26,7 +27,8 @@ class TestHBNBCommand(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """HBNBCommand testing teardown
+        """
+            HBNBCommand testing teardown
         """
         try:
             os.rename("tmp", "file.json")
@@ -68,22 +70,17 @@ class TestHBNBCommand(unittest.TestCase):
         self.assertIsNotNone(HBNBCommand.strip_clean.__doc__)
         self.assertIsNotNone(HBNBCommand.default.__doc__)
 
-    def test_func_emptyline(self):
-        """any empty line input"""
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("\n")
-            self.assertEqual("", fl.getvalue())
-
     def test_func_quit(self):
         """quit command input"""
         with patch("sys.stdout", new=StringIO()) as fl:
             self.HBNB.onecmd("quit")
             self.assertEqual("", fl.getvalue())
 
-    def test_func_EOF(self):
-        """EOF quits."""
+    def test_func_emptyline(self):
+        """any empty line input"""
         with patch("sys.stdout", new=StringIO()) as fl:
-            self.assertTrue(self.HBNB.onecmd("EOF"))
+            self.HBNB.onecmd("\n")
+            self.assertEqual("", fl.getvalue())
 
     def test_func_create_errors(self):
         """create command errors"""
@@ -95,6 +92,11 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("create asdfsfsd")
             self.assertEqual(
                 "** class doesn't exist **\n", fl.getvalue())
+            
+    def test_func_EOF(self):
+        """EOF quits."""
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.assertTrue(self.HBNB.onecmd("EOF"))
 
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_func_create(self):
@@ -160,6 +162,25 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn("'latitude': 37.57", output)
             self.assertNotIn("'longitude'", output)
 
+    def test_func_destroy(self):
+        """destroy command input."""
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.HBNB.onecmd("destroy")
+            self.assertEqual(
+                "** class name missing **\n", fl.getvalue())
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.HBNB.onecmd("destroy Galaxy")
+            self.assertEqual(
+                "** class doesn't exist **\n", fl.getvalue())
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.HBNB.onecmd("destroy User")
+            self.assertEqual(
+                "** instance id missing **\n", fl.getvalue())
+        with patch('sys.stdout', new=StringIO()) as fl:
+            self.HBNB.onecmd("destroy BaseModel 12345")
+            self.assertEqual(
+                "** no instance found **\n", fl.getvalue())
+            
     def test_func_show(self):
         """show command."""
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -179,24 +200,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
 
-    def test_func_destroy(self):
-        """destroy command input."""
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("destroy")
-            self.assertEqual(
-                "** class name missing **\n", fl.getvalue())
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("destroy Galaxy")
-            self.assertEqual(
-                "** class doesn't exist **\n", fl.getvalue())
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("destroy User")
-            self.assertEqual(
-                "** instance id missing **\n", fl.getvalue())
-        with patch('sys.stdout', new=StringIO()) as fl:
-            self.HBNB.onecmd("destroy BaseModel 12345")
-            self.assertEqual(
-                "** no instance found **\n", fl.getvalue())
 
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_func_all(self):
@@ -206,6 +209,17 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual("** class doesn't exist **\n", fl.getvalue())
         with patch("sys.stdout", new=StringIO()) as fl:
             self.HBNB.onecmd("all State")
+            self.assertEqual("[]\n", fl.getvalue())
+
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    def test_func_z_all(self):
+        """alternate all command."""
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.HBNB.onecmd("asdfsdfsd.all()")
+            self.assertEqual(
+                "** class doesn't exist **\n", fl.getvalue())
+        with patch("sys.stdout", new=StringIO()) as fl:
+            self.HBNB.onecmd("State.all()")
             self.assertEqual("[]\n", fl.getvalue())
 
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
@@ -241,17 +255,6 @@ class TestHBNBCommand(unittest.TestCase):
                 "** value missing **\n", fl.getvalue())
 
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
-    def test_func_z_all(self):
-        """alternate all command."""
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("asdfsdfsd.all()")
-            self.assertEqual(
-                "** class doesn't exist **\n", fl.getvalue())
-        with patch("sys.stdout", new=StringIO()) as fl:
-            self.HBNB.onecmd("State.all()")
-            self.assertEqual("[]\n", fl.getvalue())
-
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_func_z_count(self):
         """count command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -272,7 +275,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("BaseModel.show(abcd-123)")
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
-
+            
     def test_func_destroy(self):
         """alternate dest command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -309,7 +312,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("User.update(" + my_id + ", name)")
             self.assertEqual(
                 "** value missing **\n", fl.getvalue())
-
+    
 
 if __name__ == "__main__":
     unittest.main()

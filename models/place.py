@@ -4,8 +4,7 @@
 """
 import models
 from os import getenv
-from models.base_model import Base
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy import Column, Float, Integer, ForeignKey, String, Table
@@ -58,7 +57,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     reviews = relationship("Review", backref="place", cascade="delete")
     amenities = relationship("Amenity", secondary="place_amenity",
-                             viewonly=False)
+                             back_populates='place_amenities', viewonly=False)
     amenity_ids = []
 
     if getenv("HBNB_TYPE_STORAGE", None) != "db":

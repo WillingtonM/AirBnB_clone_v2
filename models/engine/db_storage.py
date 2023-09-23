@@ -36,7 +36,7 @@ class DBStorage:
         """
         dic = {}
         if cls is None:
-            classes = [State, City]  # add User, Place, Review, Amenity after
+            classes = [State, City, User, Place, Review, Amenity]
         elif isinstance(cls, str):
             try:
                 cls = eval(cls)

@@ -9,10 +9,10 @@ from os import environ
 
 storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
-if (storage_engine == "db"):
-    Base = declarative_base()
-else:
-    Base = object
+# if (storage_engine == "db"):
+Base = declarative_base()
+# else:
+#     Base = object
 
 
 class BaseModel:

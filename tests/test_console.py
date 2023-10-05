@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 """Defines unittests for console.py."""
 import os
-import pep8
 import unittest
+import pep8
 import models
 from unittest.mock import patch
-from io import StringIO
 from console import HBNBCommand
-from models.engine.db_storage import DBStorage
+from io import StringIO
 from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 
 
 class TestHBNBCommand(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestHBNBCommand(unittest.TestCase):
         except IOError:
             pass
         del cls.HBNB
-        if type(models.storage) == DBStorage:
+        if type(models.storage) is DBStorage:
             models.storage._DBStorage__session.close()
 
     def tearDown(self):
@@ -92,13 +92,13 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("create asdfsfsd")
             self.assertEqual(
                 "** class doesn't exist **\n", fl.getvalue())
-            
+
     def test_func_EOF(self):
         """EOF quits."""
         with patch("sys.stdout", new=StringIO()) as fl:
             self.assertTrue(self.HBNB.onecmd("EOF"))
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_create(self):
         """create command."""
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -144,12 +144,12 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("all Amenity")
             self.assertIn(am, fl.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_create_kwargs(self):
         """create command with kwargs."""
         with patch("sys.stdout", new=StringIO()) as fl:
             called = ('create Place city_id="0001" name="My_house" '
-                    'number_rooms=4 latitude=37.77 longitude=a')
+                      'number_rooms=4 latitude=37.77 longitude=a')
             self.HBNB.onecmd(called)
             pl = fl.getvalue().strip()
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -180,7 +180,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("destroy BaseModel 12345")
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
-            
+
     def test_func_show(self):
         """show command."""
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -200,8 +200,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
 
-
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_all(self):
         """all command input."""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -211,7 +210,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("all State")
             self.assertEqual("[]\n", fl.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_z_all(self):
         """alternate all command."""
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -222,7 +221,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("State.all()")
             self.assertEqual("[]\n", fl.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_update(self):
         """update command input."""
         with patch("sys.stdout", new=StringIO()) as fl:
@@ -254,7 +253,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** value missing **\n", fl.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_z_count(self):
         """count command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -275,7 +274,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("BaseModel.show(abcd-123)")
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
-            
+
     def test_func_destroy(self):
         """alternate dest command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -287,7 +286,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", fl.getvalue())
 
-    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
+    @unittest.skipIf(type(models.storage) is DBStorage, "Testing DBStorage")
     def test_func_update(self):
         """alternate destroy command input"""
         with patch('sys.stdout', new=StringIO()) as fl:
@@ -312,7 +311,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("User.update(" + my_id + ", name)")
             self.assertEqual(
                 "** value missing **\n", fl.getvalue())
-    
+
 
 if __name__ == "__main__":
     unittest.main()

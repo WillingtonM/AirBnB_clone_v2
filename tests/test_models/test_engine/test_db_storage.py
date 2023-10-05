@@ -48,6 +48,7 @@ class TestFileStorage(unittest.TestCase):
         pep8_res = pep8_stl.check_files(['models/file_storage.py'])
         self.assertEqual(pep8_res.total_errors, 1,
                          "Found code style errors (and warnings).")
+
     def test_func_class_docstring(self):
         """
         Function that tests if class docstring documentation exist
@@ -108,7 +109,7 @@ class TestFileStorage(unittest.TestCase):
         key_2 = 'State.412409120491902491209491024'
         try:
             self.assertRaises(temp_eval[key_2], KeyError)
-        except:
+        except Exception:
             pass
 
     def test_func_reload(self):
@@ -124,7 +125,7 @@ class TestFileStorage(unittest.TestCase):
         key_2 = 'State.412409120491902491209491024'
         try:
             self.assertRaises(obj_sto[key_2], KeyError)
-        except:
+        except Exception:
             pass
 
     def test_func_delete_basic(self):
@@ -136,7 +137,7 @@ class TestFileStorage(unittest.TestCase):
         key_2 += str(self.tmp_objs[2].id)
         try:
             self.assertRaises(obj_sto[key_2], KeyError)
-        except:
+        except Exception:
             pass
 
     def test_func_new_basic(self):
@@ -156,5 +157,5 @@ class TestFileStorage(unittest.TestCase):
         try:
             self.assertRaises(storage.new('jwljfef'), TypeError)
             self.assertRaises(storage.new(None), TypeError)
-        except:
+        except Exception:
             pass

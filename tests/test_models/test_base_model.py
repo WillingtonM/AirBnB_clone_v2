@@ -7,6 +7,7 @@ from datetime import datetime
 from uuid import UUID
 import json
 
+
 class test_basemodel(unittest.TestCase):
     """Represents tests for BaseModel """
 
@@ -24,7 +25,7 @@ class test_basemodel(unittest.TestCase):
         """Performs operations after tests are run"""
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_func_default(self):
@@ -48,7 +49,7 @@ class test_basemodel(unittest.TestCase):
             new_val = BaseModel(**copy)
 
     def test_func_save(self):
-        """ Testing save """
+        """ Test save """
         val = self.value()
         val.save()
         key = self.name + "." + val.id

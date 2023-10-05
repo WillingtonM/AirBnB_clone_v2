@@ -4,9 +4,8 @@
     and another that uploads the file on severs to specific directories
     the last combines them
 """
-from fabric.decorators import hosts
-from fabric.operations import put, get, run, sudo, local, reboot
-from fabric.state import env
+
+from fabric.api import put, run, env, local
 from datetime import datetime
 import os
 

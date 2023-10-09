@@ -1,58 +1,70 @@
 #!/usr/bin/python3
-""" a fabric file that contain three functions,
-    one that creates a tgz of a directory,
-    and another that uploads the file on severs to specific directories
-    the last combines them
-"""
-
-from fabric.api import put, run, env, local
+"""web application deployment with Fabric module"""
 from datetime import datetime
 import os
-
-env.hosts = ["54.90.49.90", "54.165.247.60"]
-env.user = 'ubuntu'
+from fabric.api import env, local, put, run, runs_once
 
 
+env.hosts = ["54.209.215.140", "52.87.217.9"]
+"""list host server IP addresses."""
+
+@runs_once
 def do_pack():
-    """ a function that creates and verbose a gzip directory of web_static dir
-        and save it in versions directory """
-    local("mkdir -p versions")
-    path = "versions/web_static_{}.tgz"\
-        .format(datetime.strftime(datetime.now(), "%Y%m%d%H%M%S"))
-    res = local("tar -cvzf {} web_static".format(path), capture=True)
-    if res.failed:
-        return None
-    return path
+    """
+        Archives static files
+    """
+    if not os.path.isdir("versions"):
+        os.mkdir("versions")
+    crnt_time = datetime.now()
+    res_oupt = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+        crnt_time.year,
+        crnt_time.month,
+        crnt_time.day,
+        crnt_time.hour,
+        crnt_time.minute,
+        crnt_time.second
+    )
+    try:
+        print("Packing web_static to {}".format(res_oupt))
+        local("tar -cvzf {} web_static".format(res_oupt))
+        archize_size = os.stat(res_oupt).st_size
+        print("web_static packed: {} -> {} Bytes".format(res_oupt, archize_size))
+    except Exception:
+        res_oupt = None
+    return res_oupt
 
 
 def do_deploy(archive_path):
-    """ a function witch uploads a tgz file to the server in a specific way """
-    if os.path.exists(archive_path) is False:
+    """
+        Deploys static files to host servers.
+        Args:
+            archive_path: Path to archived static files.
+    """
+    if not os.path.exists(archive_path):
         return False
+    success = False
+    f_name = os.path.basename(archive_path)
+    dir_name = f_name.replace(".tgz", "")
+    dir_path = "/data/web_static/releases/{}/".format(dir_name)
     try:
-        path = archive_path.replace('/', ' ').replace('.', ' ').split()
-        zname = path[1]
-        fl_name = path[1] + '.' + path[2]
-        dr = '/data/web_static/releases/{}/'.format(zname)
-        put(archive_path, '/tmp/')
-        run('mkdir -p {}'.format(dr))
-        run('tar -xzf /tmp/{} -C {}/'.format(fl_name, dr))
-        run('rm /tmp/{}'.format(fl_name))
-        run('mv {}/web_static/* {}'.format(dr, dr))
-        run('rm -rf {}/web_static'.format(dr))
-        current_dir = '/data/web_static/current'
-        run('rm -rf {}'.format(current_dir))
-        run('ln -s {}/ {}'.format(dr, current_dir))
-        return True
+        put(archive_path, "/tmp/{}".format(f_name))
+        run("mkdir -p {}".format(dir_path))
+        run("tar -xzf /tmp/{} -C {}".format(f_name, dir_path))
+        run("rm -rf /tmp/{}".format(f_name))
+        run("mv {}web_static/* {}".format(dir_path, dir_path))
+        run("rm -rf {}web_static".format(dir_path))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(dir_path))
+        print('New version deployed!')
+        success = True
     except Exception:
-        return False
+        success = False
+    return success
 
 
 def deploy():
-    """ a function that creates the gzip of a directory and upload
-        it to the server in s set of procedures
     """
-    archive_path = do_pack()
-    if archive_path is None:
-        return False
-    return do_deploy(archive_path)
+        Archives and deploys static files to host servers.
+    """
+    archv_path = do_pack()
+    return do_deploy(archv_path) if archv_path else False

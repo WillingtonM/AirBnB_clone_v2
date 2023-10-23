@@ -15,26 +15,27 @@ app = Flask("__name__")
 
 @app.teardown_appcontext
 def refresh(exception):
-        """Remove current SQLAlchemy session."""
-        storage.close()
+    """Remove current SQLAlchemy session."""
+    storage.close()
 
 
 @app.route("/states_list", strict_slashes=False)
 def route_states():
-        """Displays an HTML page with a list of all states and related cities. sorted by name"""
-        pep_fix = models.dummy_classes["State"]
-        data_all = storage.all(cls=pep_fix)
-        db_states = data_all.values()
-        return render_template('7-states_list.html', states_list=db_states)
+    """Displays HTML page with list ofstates & related cities"""
+    pep_fix = models.dummy_classes["State"]
+    data_all = storage.all(cls=pep_fix)
+    db_states = data_all.values()
+    return render_template('7-states_list.html', states_list=db_states)
 
 
 @app.route("/cities_by_states", strict_slashes=False)
 def route_city():
-        pep_fix = models.dummy_classes["State"]
-        data_all = storage.all(cls=pep_fix)
-        db_states = data_all.values()
-        return render_template('8-cities_by_states.html', states_list=db_states)
+    pep_fix = models.dummy_classes["State"]
+    data_all = storage.all(cls=pep_fix)
+    db_states = data_all.values()
+    html_file = '8-cities_by_states.html'
+    return render_template(html_file, states_list=db_states)
 
 
 if __name__ == "__main__":
-        app.run()
+    app.run()

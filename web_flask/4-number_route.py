@@ -46,5 +46,6 @@ def num_display(n):
     """Display “n is a number” only if integer"""
     return "{} is a number".format(n)
 
+
 if __name__ == "__main__":
     app.run()

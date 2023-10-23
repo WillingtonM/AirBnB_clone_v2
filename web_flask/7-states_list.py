@@ -5,9 +5,9 @@ Start the app and klistens on 0.0.0.0, port 5000
 
 Routes: /states_list
 """
+from flask import Flask, render_template
 from models import storage
 from models.state import State
-from flask import Flask, render_template
 
 app = Flask(__name__)
 

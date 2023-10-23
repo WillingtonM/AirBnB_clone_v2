@@ -15,11 +15,11 @@ app = Flask(__name__)
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
     """Displays the main HBnB filters HTML page."""
-    states = storage.all("State")
-    amenities = storage.all("Amenity")
+    db_states = storage.all("State")
+    db_amenities = storage.all("Amenity")
     places = storage.all("Place")
     return render_template("100-hbnb.html",
-                           states=states, amenities=amenities, places=places)
+                           states=db_states, amenities=db_amenities, places=places)
 
 
 @app.teardown_appcontext

@@ -10,14 +10,14 @@ body {
 
 /* Block horizontal scrolling */
 html, body {
-  width: 100%;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Container style */
 .container {
-  margin: 30px auto;
   max-width: 1000px;
+  margin: 30px auto;
 }
 
 /* Strong style */

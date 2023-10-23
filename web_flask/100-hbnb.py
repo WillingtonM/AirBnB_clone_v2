@@ -24,7 +24,7 @@ def hbnb():
 
 @app.teardown_appcontext
 def teardown(exc):
-    """Remove the current SQLAlchemy session."""
+    """Remove current SQLAlchemy session."""
     storage.close()
 
 

@@ -33,7 +33,8 @@ def text(text):
 @app.route('/python/<text>', strict_slashes=False)
 def display(text):
     """display “Python ”, followed by the value of the text"""
-    return "Python {}".format(text.replace("_", " "))
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
 
 @app.route('/number/<int:n>', strict_slashes=False)

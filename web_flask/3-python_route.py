@@ -28,14 +28,16 @@ def HBNB():
 @app.route('/c/<text>', strict_slashes=False)
 def text(text):
     """Returns/Displays text given"""
-    return "C {}".format(text.replace("_", " "))
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
 
 @app.route('/python/', defaults={'text': 'is_cool'})
 @app.route('/python/<text>', strict_slashes=False)
 def display(text):
     """display “Python ”, followed by the value of the text"""
-    return "Python {}".format(text.replace("_", " "))
+    text = text.replace("_", " ")
+    return "C {}".format(text)
 
 
 if __name__ == "__main__":

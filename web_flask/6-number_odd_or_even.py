@@ -4,6 +4,12 @@ The Flask framework web application
 Start the app and klistens on 0.0.0.0, port 5000
 
 Routes: /
+        /hbnb
+        /c/<text>
+        /python/(<text>
+        /number
+        /number_template
+        /number_odd_or_even
 """
 from flask import Flask, url_for, render_template
 
@@ -38,7 +44,7 @@ def display(text):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def num_display(n):
-    """display “n is a number” only"""
+    """Display “n is a number” only if integer"""
     return "{} is a number".format(n)
 
 
@@ -50,8 +56,7 @@ def num_html(n):
 
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def num_html_even_odd(n):
-    """display HTML is "n" is a number only
-    H1 tag: Number: n is even|odd"""
+    """Displays an HTML page only if <n> is even|odd."""
     return render_template('6-number_odd_or_even.html', name=n)
 
 

@@ -4,6 +4,10 @@ The Flask framework web application
 Start the app and klistens on 0.0.0.0, port 5000
 
 Routes: /
+        /hbnb
+        /c/<text>
+        /python/(<text>
+        /number
 """
 
 from flask import Flask
@@ -39,7 +43,7 @@ def display(text):
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def num_display(n):
-    """display “n is a number” only if integer"""
+    """Display “n is a number” only if integer"""
     return "{} is a number".format(n)
 
 if __name__ == "__main__":

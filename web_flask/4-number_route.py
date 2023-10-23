@@ -32,14 +32,14 @@ def text(text):
 @app.route('/python/', defaults={'text': 'is_cool'})
 @app.route('/python/<text>', strict_slashes=False)
 def display(text):
-    """display “Python ”, followed by the value of the text"""
+    """Display “Python” followed by the value of the <text>"""
     text = text.replace("_", " ")
-    return "C {}".format(text)
+    return "Python {}".format(text)
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def num_display(n):
-    """display “n is a number” only"""
+    """display “n is a number” only if integer"""
     return "{} is a number".format(n)
 
 if __name__ == "__main__":

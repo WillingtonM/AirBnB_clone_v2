@@ -8,7 +8,7 @@ footer {
   background-color: #fff;
   display: flex;
   height: 60px;
-  justify-content: center;
   border-top: 1px solid #ccc;
+  justify-content: center;
   width: 100%;
 }
